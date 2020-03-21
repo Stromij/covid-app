@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:covid_hub/http/HttpClient.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -57,8 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> dioExample() async {
+    Dio api = HttpClient().api;
+    Response res = await api.get("https://api.infermedica.com/covid19/info", options: Options(headers: {HttpHeaders.contentTypeHeader: " application/json"}));
+    print(res.data);
+  }
+
   @override
   Widget build(BuildContext context) {
+    dioExample();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
