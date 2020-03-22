@@ -1,5 +1,9 @@
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
+import 'package:covid_hub/cognito/cognito.dart';
+import 'package:covid_hub/cognito/user_model.dart';
 import 'package:covid_hub/registration/location_chooser.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -91,6 +95,32 @@ class _RegistrationPageState extends State<RegistrationPage>
                       onPressed: () {
                         if (_fbKey.currentState.saveAndValidate()) {
                           print(_fbKey.currentState.value);
+                          user = User(
+                            email: _fbKey.currentState.value['email'],
+                            passwd: _fbKey.currentState.value['password'],
+                          );
+                          var data;
+                          try {
+                            Future<void>.sync(() async {
+                              data = await userPool.signUp(
+                                  user.email,
+                                  user.passwd,
+                                  userAttributes: [
+                                    AttributeArg(
+                                        name: 'email',
+                                        value: user.email),
+                                  ]).catchError((err) {
+                                print(err);
+                              });
+                              print(data);
+                            });
+                          } catch (e) {
+                            print(e);
+                            final snackBar =
+                                SnackBar(content: Text('Error during sign up'));
+                            Scaffold.of(context).showSnackBar(snackBar);
+                            return;
+                          }
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) => LocationChooser(),

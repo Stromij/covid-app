@@ -1,3 +1,5 @@
+import 'package:covid_hub/cognito/cognito.dart';
+import 'package:covid_hub/cognito/user_model.dart';
 import 'package:covid_hub/registration/preexisting_condition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -52,6 +54,8 @@ class _LocationChooserState extends State<LocationChooser> {
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
                         print(_fbKey.currentState.value);
+                        user = user.copyWith(
+                            location: _fbKey.currentState.value['location']);
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => PreexistingCondition(),

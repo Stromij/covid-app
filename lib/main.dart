@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,7 +58,7 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    dioExample();
+    //dioExample();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
