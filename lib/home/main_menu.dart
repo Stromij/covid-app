@@ -1,3 +1,4 @@
+import 'package:covid_hub/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class MainMenu extends StatefulWidget {
@@ -18,7 +19,8 @@ class _MainMenuState extends State<MainMenu> {
                 accountName: Text('Max Muster'),
                 accountEmail: Text('muster@covidhub.info'),
                 currentAccountPicture: GestureDetector(
-                  onTap: null, // TODO navigate to propfile Page
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => ProfilePage())),
                   child: CircleAvatar(
                     child: Text(
                       'M',
@@ -30,7 +32,8 @@ class _MainMenuState extends State<MainMenu> {
               ListTile(
                 title: Text('Mein Profil'),
                 trailing: Icon(Icons.account_circle),
-                onTap: null, //TODO navigate to profile Page
+                onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ProfilePage())),
               ),
             ],
           ),
