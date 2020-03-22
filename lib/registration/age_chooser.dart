@@ -37,6 +37,7 @@ class _AgeChooserState extends State<AgeChooser> {
                       attribute: 'year',
                       maxLines: 1,
                       decoration: const InputDecoration(labelText: 'Jahrgang'),
+                      keyboardType: TextInputType.number,
                       validators: [
                         FormBuilderValidators.required(),
                         FormBuilderValidators.minLength(4,
