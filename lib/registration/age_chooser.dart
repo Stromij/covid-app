@@ -1,7 +1,8 @@
+import 'package:covid_hub/cognito/cognito.dart';
+import 'package:covid_hub/cognito/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:intl/intl.dart';
 
 class AgeChooser extends StatefulWidget {
   AgeChooser({Key key}) : super(key: key);
@@ -62,11 +63,11 @@ class _AgeChooserState extends State<AgeChooser> {
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
                         print(_fbKey.currentState.value);
-                        /*Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => AgeChooser(_fbKey),
-                          ),
-                        );*/
+                        user = user.copyWith(
+                          birthYear:
+                              int.parse(_fbKey.currentState.value['year']),
+                        );
+                        Navigator.of(context).pop();
                       }
                     },
                   ),

@@ -1,10 +1,10 @@
+import 'package:covid_hub/cognito/cognito.dart';
+import 'package:covid_hub/cognito/user_model.dart';
 import 'package:covid_hub/registration/age_chooser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class PreexistingCondition extends StatefulWidget {
-
-
   PreexistingCondition({Key key}) : super(key: key);
 
   @override
@@ -13,7 +13,6 @@ class PreexistingCondition extends StatefulWidget {
 
 class _PreexistingConditionState extends State<PreexistingCondition> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-  ValueChanged _onChanged = (val) => print(val);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class _PreexistingConditionState extends State<PreexistingCondition> {
                 autovalidate: true,
                 child: Column(
                   children: <Widget>[
-                    FormBuilderChipsInput(
+                    /*FormBuilderChipsInput(
                       attribute: 'preexisting',
                       decoration: InputDecoration(labelText: 'Vorerkrangung'),
                       onChanged: _onChanged,
@@ -57,7 +56,30 @@ class _PreexistingConditionState extends State<PreexistingCondition> {
                         onDeleted: () => state.deleteChip(condition),
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                    )
+                    )*/
+                    FormBuilderCheckboxList(
+                      attribute: 'conditions',
+                      decoration: InputDecoration(labelText: 'Vorerkrankungen'),
+                      initialValue: [],
+                      options: [
+                        FormBuilderFieldOption(
+                          child: Text('Herz-Kreislauf'),
+                          value: Conditions.HEART_DISEASE.index,
+                        ),
+                        FormBuilderFieldOption(
+                          child: Text('Atemwege'),
+                          value: Conditions.RESPIRATORY_DISEASE.index,
+                        ),
+                        FormBuilderFieldOption(
+                          child: Text('Autoimmun'),
+                          value: Conditions.AUTOIMMUNE_DISEASE.index,
+                        ),
+                        FormBuilderFieldOption(
+                          child: Text('Diabetes'),
+                          value: Conditions.DIABETES.index,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -70,6 +92,9 @@ class _PreexistingConditionState extends State<PreexistingCondition> {
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
                         print(_fbKey.currentState.value);
+                        user = user.copyWith(
+                            conditions:
+                                _fbKey.currentState.value['conditions']);
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => AgeChooser(),
