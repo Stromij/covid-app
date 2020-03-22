@@ -24,94 +24,130 @@ class _ProfilePageState extends State<ProfilePage> {
         appBar: AppBar(
           title: Text('Profil'),
         ),
-        body: Column(
-          children: <Widget>[
-            Card(
-              child: ListTile(
-                title: Text(
-                  'Name',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: _titleSize,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Card(
+                child: ListTile(
+                  title: Text(
+                    'Name',
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontSize: _titleSize,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  _userName,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: _valueSize,
+                  subtitle: Text(
+                    _userName,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: _valueSize,
+                    ),
                   ),
+                  trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _showEditDialog(context, 'Name')),
                 ),
-                trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () => _showEditDialog(context, 'Name')),
               ),
-            ),
-            Card(
-              child: ListTile(
-                title: Text(
-                  'E-Mail',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: _titleSize,
+              Card(
+                child: ListTile(
+                  title: Text(
+                    'E-Mail',
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontSize: _titleSize,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  _userMail,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: _valueSize,
+                  subtitle: Text(
+                    _userMail,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: _valueSize,
+                    ),
                   ),
+                  trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _showEditDialog(context, 'E-Mail')),
                 ),
-                trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () => _showEditDialog(context, 'E-Mail')),
               ),
-            ),
-            Card(
-              child: ListTile(
-                title: Text(
-                  'Wohnort',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: _titleSize,
+              Card(
+                child: ListTile(
+                  title: Text(
+                    'Wohnort',
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontSize: _titleSize,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  _userLocation,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: _valueSize,
+                  subtitle: Text(
+                    _userLocation,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: _valueSize,
+                    ),
                   ),
+                  trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _showEditDialog(context, 'Wohnort')),
                 ),
-                trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () => _showEditDialog(context, 'Wohnort')),
               ),
-            ),
-            Card(
-              child: ListTile(
-                title: Text(
-                  'Jahrgang',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: _titleSize,
+              Card(
+                child: ListTile(
+                  title: Text(
+                    'Jahrgang',
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontSize: _titleSize,
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  _userBirth,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: _valueSize,
+                  subtitle: Text(
+                    _userBirth,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: _valueSize,
+                    ),
                   ),
+                  trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _showEditDialog(context, 'Jahrgang')),
                 ),
-                trailing: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () => _showEditDialog(context, 'Jahrgang')),
               ),
-            ),
-          ],
-          //TODO: Add pre-existing conditions list
+              Padding(
+                padding: const EdgeInsets.only(left: 4.0, right: 4.0,),
+                child: ListTile(
+                  title: Text(
+                    'Vorerkrankungen',
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontSize: _valueSize,
+                    ),
+                  ),
+                  trailing: IconButton(
+                      icon: Icon(Icons.add_circle),
+                      onPressed: () => _showEditDialog(context, 'Vorerkrankungen')),
+                ),
+              ),
+              //TODO: update SDK constraints (speak with team first)
+              ..._userConditions.map(
+                (condition) => Card(
+                  child: ListTile(
+                    title: Text(
+                      condition,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: _valueSize,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.remove_circle),
+                      onPressed: () => setState(() {
+                        _userConditions.remove(condition);
+                      }),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
 
@@ -133,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(color: Colors.green),
               ),
               onPressed: () {
-                if(_formKey.currentState.validate()) {
+                if (_formKey.currentState.validate()) {
                   switch (type) {
                     case 'Name':
                       setState(() {
@@ -156,6 +192,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     case 'Jahrgang':
                       setState(() {
                         _userBirth = _textEditingController.text;
+                      });
+                      Navigator.of(context).pop();
+                      break;
+                    case 'Vorerkrankungen':
+                      setState(() {
+                        _userConditions.add(_textEditingController.text);
                       });
                       Navigator.of(context).pop();
                       break;
