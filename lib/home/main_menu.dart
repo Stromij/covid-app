@@ -1,5 +1,4 @@
 import 'package:covid_hub/cognito/cognito.dart';
-import 'package:covid_hub/cognito/user_model.dart';
 import 'package:covid_hub/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
@@ -154,6 +153,7 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           FloatingActionButton(
+                            heroTag: 'btn1',
                             onPressed: () {},
                             child: Icon(Icons.add),
                             mini: true,
@@ -277,6 +277,7 @@ class _MainMenuState extends State<MainMenu> {
                     Row(
                       children: <Widget>[
                         FloatingActionButton(
+                          heroTag: 'btn2',
                           onPressed: null,
                           backgroundColor: Colors.green,
                           child: Icon(
@@ -294,6 +295,7 @@ class _MainMenuState extends State<MainMenu> {
                     Row(
                       children: <Widget>[
                         FloatingActionButton(
+                          heroTag: 'btn3',
                           onPressed: null,
                           backgroundColor: Colors.greenAccent,
                           child: Text(
@@ -333,6 +335,7 @@ class _MainMenuState extends State<MainMenu> {
                     Row(
                       children: <Widget>[
                         FloatingActionButton(
+                          heroTag: 'btn4',
                           onPressed: null,
                           backgroundColor: Colors.greenAccent,
                           child: Text(
@@ -372,6 +375,7 @@ class _MainMenuState extends State<MainMenu> {
                     Row(
                       children: <Widget>[
                         FloatingActionButton(
+                          heroTag: 'btn5',
                           onPressed: null,
                           backgroundColor: Colors.greenAccent,
                           child: Text(
@@ -411,6 +415,7 @@ class _MainMenuState extends State<MainMenu> {
                     Row(
                       children: <Widget>[
                         FloatingActionButton(
+                          heroTag: 'btn6',
                           onPressed: null,
                           backgroundColor: Colors.greenAccent,
                           child: Text(
@@ -450,6 +455,7 @@ class _MainMenuState extends State<MainMenu> {
                     Row(
                       children: <Widget>[
                         FloatingActionButton(
+                          heroTag: 'btn7',
                           onPressed: null,
                           backgroundColor: Colors.greenAccent,
                           child: Text(
@@ -489,6 +495,7 @@ class _MainMenuState extends State<MainMenu> {
                     Row(
                       children: <Widget>[
                         FloatingActionButton(
+                          heroTag: 'btn8',
                           onPressed: null,
                           backgroundColor: Colors.greenAccent,
                           child: Text(
