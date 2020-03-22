@@ -1,32 +1,24 @@
+import 'package:covid_hub/cognito/cognito.dart';
 import 'package:covid_hub/cognito/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class ProfilePage extends StatefulWidget {
-  final User user;
-
-  ProfilePage(this.user);
+  ProfilePage();
 
   @override
-  _ProfilePageState createState() => _ProfilePageState(user);
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _textEditingController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
 
-  _ProfilePageState(User user)
-      : _userName = user.name,
-        _userMail = user.email,
-        _userLocation = user.location,
-        _userBirth = user.birthYear.toString(),
-        _userConditions = user.conditionStrings;
-
-  String _userName;
-  String _userMail;
-  String _userLocation;
-  String _userBirth;
-  List<String> _userConditions;
+  String _userName = user.name;
+  String _userMail = user.email;
+  String _userLocation = user.location;
+  String _userBirth = user.birthYear.toString();
+  List<String> _userConditions = user.conditionStrings;
 
   double _titleSize = 16.0;
   double _valueSize = 18.0;

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class PreexistingCondition extends StatefulWidget {
-  final User user;
 
-  PreexistingCondition(this.user, {Key key}) : super(key: key);
+
+  PreexistingCondition({Key key}) : super(key: key);
 
   @override
   _PreexistingConditionState createState() => _PreexistingConditionState();
@@ -94,12 +94,12 @@ class _PreexistingConditionState extends State<PreexistingCondition> {
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
                         print(_fbKey.currentState.value);
-                        User user = widget.user.copyWith(
+                        user = user.copyWith(
                             conditions:
                                 _fbKey.currentState.value['conditions']);
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => AgeChooser(user),
+                            builder: (context) => AgeChooser(),
                           ),
                         );
                       }

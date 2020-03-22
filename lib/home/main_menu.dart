@@ -1,21 +1,16 @@
+import 'package:covid_hub/cognito/cognito.dart';
 import 'package:covid_hub/cognito/user_model.dart';
 import 'package:covid_hub/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class MainMenu extends StatefulWidget {
-  final User user;
-
-  const MainMenu(this.user, {Key key}) : super(key: key);
+  const MainMenu({Key key}) : super(key: key);
 
   @override
-  _MainMenuState createState() => _MainMenuState(user);
+  _MainMenuState createState() => _MainMenuState();
 }
 
 class _MainMenuState extends State<MainMenu> {
-  final User user;
-
-  _MainMenuState(this.user);
-
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
@@ -29,10 +24,10 @@ class _MainMenuState extends State<MainMenu> {
               accountEmail: Text(user.email),
               currentAccountPicture: GestureDetector(
                 onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ProfilePage(user))),
+                    MaterialPageRoute(builder: (context) => ProfilePage())),
                 child: CircleAvatar(
                   child: Text(
-                    'M',
+                    user.name.substring(0, 1),
                     style: TextStyle(fontSize: 40.0),
                   ),
                 ),
@@ -42,7 +37,7 @@ class _MainMenuState extends State<MainMenu> {
               title: Text('Mein Profil'),
               trailing: Icon(Icons.account_circle),
               onTap: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => ProfilePage(user))),
+                  .push(MaterialPageRoute(builder: (context) => ProfilePage())),
             ),
           ],
         ),

@@ -1,12 +1,12 @@
+import 'package:covid_hub/cognito/cognito.dart';
 import 'package:covid_hub/cognito/user_model.dart';
 import 'package:covid_hub/registration/location_chooser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class NamePage extends StatefulWidget {
-  final User user;
 
-  NamePage(this.user, {Key key}) : super(key: key);
+  NamePage({Key key}) : super(key: key);
 
   @override
   _NamePageState createState() => _NamePageState();
@@ -56,12 +56,12 @@ class _NamePageState extends State<NamePage> {
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
                         print(_fbKey.currentState.value);
-                        User user = widget.user.copyWith(
+                        user = user.copyWith(
                           name: _fbKey.currentState.value['name'],
                         );
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => LocationChooser(user),
+                            builder: (context) => LocationChooser(),
                           ),
                         );
                       }

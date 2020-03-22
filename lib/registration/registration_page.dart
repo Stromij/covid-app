@@ -1,3 +1,4 @@
+import 'package:covid_hub/cognito/cognito.dart';
 import 'package:covid_hub/cognito/user_model.dart';
 import 'package:covid_hub/registration/name_page.dart';
 import 'package:flutter/material.dart';
@@ -93,13 +94,13 @@ class _RegistrationPageState extends State<RegistrationPage>
                       onPressed: () {
                         if (_fbKey.currentState.saveAndValidate()) {
                           print(_fbKey.currentState.value);
-                          User user = User(
+                          user = User(
                             email: _fbKey.currentState.value['email'],
                             passwd: _fbKey.currentState.value['password'],
                           );
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => NamePage(user),
+                              builder: (context) => NamePage(),
                             ),
                           );
                         }
