@@ -1,12 +1,21 @@
+import 'package:covid_hub/cognito/user_model.dart';
 import 'package:covid_hub/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class MainMenu extends StatefulWidget {
+  final User user;
+
+  const MainMenu(this.user, {Key key}) : super(key: key);
+
   @override
-  _MainMenuState createState() => _MainMenuState();
+  _MainMenuState createState() => _MainMenuState(user);
 }
 
 class _MainMenuState extends State<MainMenu> {
+  final User user;
+
+  _MainMenuState(this.user);
+
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
@@ -16,11 +25,11 @@ class _MainMenuState extends State<MainMenu> {
         child: ListView(
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('Max Muster'),
-              accountEmail: Text('muster@covidhub.info'),
+              accountName: Text(user.name),
+              accountEmail: Text(user.email),
               currentAccountPicture: GestureDetector(
                 onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ProfilePage())),
+                    MaterialPageRoute(builder: (context) => ProfilePage(user))),
                 child: CircleAvatar(
                   child: Text(
                     'M',
@@ -32,8 +41,8 @@ class _MainMenuState extends State<MainMenu> {
             ListTile(
               title: Text('Mein Profil'),
               trailing: Icon(Icons.account_circle),
-              onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ProfilePage())),
+              onTap: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ProfilePage(user))),
             ),
           ],
         ),
@@ -43,15 +52,9 @@ class _MainMenuState extends State<MainMenu> {
         child: ListView(
           children: <Widget>[
             Container(
-                padding: EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 10,
-                    bottom: 10
-                ),
-                margin: EdgeInsets.only(
-                    top: 15
-                ),
+                padding:
+                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                margin: EdgeInsets.only(top: 15),
                 color: Colors.white,
                 child: Row(
                   children: <Widget>[
@@ -65,19 +68,15 @@ class _MainMenuState extends State<MainMenu> {
                               style: TextStyle(
                                   color: Colors.redAccent,
                                   fontSize: 30,
-                                  fontWeight: FontWeight.bold
-                              ),
+                                  fontWeight: FontWeight.bold),
                             ),
                             Container(
-                                margin: EdgeInsets.only(
-                                    left: 5
-                                ),
+                                margin: EdgeInsets.only(left: 5),
                                 child: Icon(
                                   Icons.warning,
                                   color: Colors.redAccent,
                                   size: 30,
-                                )
-                            )
+                                ))
                           ],
                         ),
                         Text(
@@ -89,9 +88,7 @@ class _MainMenuState extends State<MainMenu> {
                           textAlign: TextAlign.left,
                         ),
                         GestureDetector(
-                          onTap: (){
-
-                          },
+                          onTap: () {},
                           child: Text(
                             'mehr...',
                             textAlign: TextAlign.left,
@@ -104,19 +101,14 @@ class _MainMenuState extends State<MainMenu> {
                       ],
                     )
                   ],
-                )
-            ),
+                )),
             Container(
               color: Colors.white,
               margin: EdgeInsets.only(
                 top: 10,
               ),
-              padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 10,
-                  bottom: 10
-              ),
+              padding:
+                  EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -125,23 +117,17 @@ class _MainMenuState extends State<MainMenu> {
                     style: TextStyle(
                         color: Colors.redAccent,
                         fontWeight: FontWeight.bold,
-                        fontSize: 22
-                    ),
+                        fontSize: 22),
                   ),
                   Text(
                     'Führe ein Symptomtagebuch, um den Verlauf für  dich und andere nachvollziehbar aufzuzeichnen',
                     softWrap: true,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.redAccent
-                    ),
+                    style: TextStyle(fontSize: 20, color: Colors.redAccent),
                   ),
                   Container(
                     alignment: Alignment.centerRight,
                     child: RaisedButton(
-                      onPressed: (){
-
-                      },
+                      onPressed: () {},
                       color: Colors.red,
                       textColor: Colors.white,
                       child: Text(
@@ -157,12 +143,8 @@ class _MainMenuState extends State<MainMenu> {
               margin: EdgeInsets.only(
                 top: 10,
               ),
-              padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 30,
-                  bottom: 10
-              ),
+              padding:
+                  EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 10),
               child: Column(
                 children: <Widget>[
                   Row(
@@ -177,12 +159,8 @@ class _MainMenuState extends State<MainMenu> {
                             ),
                           ),
                           FloatingActionButton(
-                            onPressed: (){
-
-                            },
-                            child: Icon(
-                                Icons.add
-                            ),
+                            onPressed: () {},
+                            child: Icon(Icons.add),
                             mini: true,
                             backgroundColor: Colors.green,
                           )
@@ -190,9 +168,7 @@ class _MainMenuState extends State<MainMenu> {
                       ),
                       Text(
                         '71',
-                        style: TextStyle(
-                            fontSize: 45
-                        ),
+                        style: TextStyle(fontSize: 45),
                       ),
                     ],
                   ),
@@ -201,21 +177,15 @@ class _MainMenuState extends State<MainMenu> {
                     children: <Widget>[
                       Text(
                         'Bis zum 1. Grad',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 20
-                        ),
+                        style: TextStyle(color: Colors.grey, fontSize: 20),
                       ),
                       Text(
                         '98710',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 20
-                        ),
+                        style: TextStyle(color: Colors.grey, fontSize: 20),
                       )
                     ],
                   ),
-                  Padding(padding: EdgeInsets.only(top:4)),
+                  Padding(padding: EdgeInsets.only(top: 4)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -236,9 +206,7 @@ class _MainMenuState extends State<MainMenu> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        top:15
-                    ),
+                    padding: EdgeInsets.only(top: 15),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,14 +222,12 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           Text(
                             'Zuletzt vor 1 Tag getroffen',
-                            style: TextStyle(
-                                color: Colors.grey
-                            ),
+                            style: TextStyle(color: Colors.grey),
                           )
                         ],
                       ),
                       RaisedButton(
-                        onPressed: (){},
+                        onPressed: () {},
                         textColor: Colors.white,
                         color: Colors.green,
                         child: Text(
@@ -284,14 +250,12 @@ class _MainMenuState extends State<MainMenu> {
                           ),
                           Text(
                             'Zuletzt vor 17 Tagen gtr.',
-                            style: TextStyle(
-                                color: Colors.grey
-                            ),
+                            style: TextStyle(color: Colors.grey),
                           )
                         ],
                       ),
                       RaisedButton(
-                        onPressed: (){},
+                        onPressed: () {},
                         textColor: Colors.white,
                         color: Colors.green,
                         child: Text(
@@ -311,12 +275,8 @@ class _MainMenuState extends State<MainMenu> {
                 margin: EdgeInsets.only(
                   top: 10,
                 ),
-                padding: EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 30,
-                    bottom: 10
-                ),
+                padding:
+                    EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 10),
                 child: Column(
                   children: <Widget>[
                     Row(
@@ -331,14 +291,12 @@ class _MainMenuState extends State<MainMenu> {
                         Padding(padding: EdgeInsets.only(left: 20)),
                         Text(
                           'Neues Treffen hinzufügen',
-                          style: TextStyle(
-                              fontSize: 20
-                          ),
+                          style: TextStyle(fontSize: 20),
                         ),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(top: 15)),
-                    Row (
+                    Row(
                       children: <Widget>[
                         FloatingActionButton(
                           onPressed: null,
@@ -357,9 +315,7 @@ class _MainMenuState extends State<MainMenu> {
                             children: <Widget>[
                               Text(
                                 'Maria Schumann, Axel Bauer',
-                                style: TextStyle(
-                                    fontSize: 15
-                                ),
+                                style: TextStyle(fontSize: 15),
                               ),
                               Text(
                                 'vor 2 Tagen',
@@ -375,12 +331,11 @@ class _MainMenuState extends State<MainMenu> {
                                   fontSize: 15,
                                 ),
                               )
-                            ]
-                        ),
+                            ]),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(top: 15)),
-                    Row (
+                    Row(
                       children: <Widget>[
                         FloatingActionButton(
                           onPressed: null,
@@ -399,9 +354,7 @@ class _MainMenuState extends State<MainMenu> {
                             children: <Widget>[
                               Text(
                                 'Olaf Kastenbaum',
-                                style: TextStyle(
-                                    fontSize: 15
-                                ),
+                                style: TextStyle(fontSize: 15),
                               ),
                               Text(
                                 'vor 20 Tagen',
@@ -417,11 +370,11 @@ class _MainMenuState extends State<MainMenu> {
                                   fontSize: 15,
                                 ),
                               )
-                            ]
-                        ),
+                            ]),
                       ],
-                    ),Padding(padding: EdgeInsets.only(top: 15)),
-                    Row (
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 15)),
+                    Row(
                       children: <Widget>[
                         FloatingActionButton(
                           onPressed: null,
@@ -440,9 +393,7 @@ class _MainMenuState extends State<MainMenu> {
                             children: <Widget>[
                               Text(
                                 'Olaf Kastenbaum',
-                                style: TextStyle(
-                                    fontSize: 15
-                                ),
+                                style: TextStyle(fontSize: 15),
                               ),
                               Text(
                                 'vor 20 Tagen',
@@ -458,11 +409,11 @@ class _MainMenuState extends State<MainMenu> {
                                   fontSize: 15,
                                 ),
                               )
-                            ]
-                        ),
+                            ]),
                       ],
-                    ),Padding(padding: EdgeInsets.only(top: 15)),
-                    Row (
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 15)),
+                    Row(
                       children: <Widget>[
                         FloatingActionButton(
                           onPressed: null,
@@ -481,9 +432,7 @@ class _MainMenuState extends State<MainMenu> {
                             children: <Widget>[
                               Text(
                                 'Olaf Kastenbaum',
-                                style: TextStyle(
-                                    fontSize: 15
-                                ),
+                                style: TextStyle(fontSize: 15),
                               ),
                               Text(
                                 'vor 20 Tagen',
@@ -499,11 +448,11 @@ class _MainMenuState extends State<MainMenu> {
                                   fontSize: 15,
                                 ),
                               )
-                            ]
-                        ),
+                            ]),
                       ],
-                    ),Padding(padding: EdgeInsets.only(top: 15)),
-                    Row (
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 15)),
+                    Row(
                       children: <Widget>[
                         FloatingActionButton(
                           onPressed: null,
@@ -522,9 +471,7 @@ class _MainMenuState extends State<MainMenu> {
                             children: <Widget>[
                               Text(
                                 'Olaf Kastenbaum',
-                                style: TextStyle(
-                                    fontSize: 15
-                                ),
+                                style: TextStyle(fontSize: 15),
                               ),
                               Text(
                                 'vor 20 Tagen',
@@ -540,11 +487,11 @@ class _MainMenuState extends State<MainMenu> {
                                   fontSize: 15,
                                 ),
                               )
-                            ]
-                        ),
+                            ]),
                       ],
-                    ),Padding(padding: EdgeInsets.only(top: 15)),
-                    Row (
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 15)),
+                    Row(
                       children: <Widget>[
                         FloatingActionButton(
                           onPressed: null,
@@ -563,9 +510,7 @@ class _MainMenuState extends State<MainMenu> {
                             children: <Widget>[
                               Text(
                                 'Olaf Kastenbaum',
-                                style: TextStyle(
-                                    fontSize: 15
-                                ),
+                                style: TextStyle(fontSize: 15),
                               ),
                               Text(
                                 'vor 20 Tagen',
@@ -581,15 +526,12 @@ class _MainMenuState extends State<MainMenu> {
                                   fontSize: 15,
                                 ),
                               )
-                            ]
-                        ),
+                            ]),
                       ],
                     )
                   ],
-                )
-            ),
+                )),
           ],
         ),
-      )
-  );
+      ));
 }
