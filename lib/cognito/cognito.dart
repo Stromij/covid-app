@@ -7,6 +7,3 @@ final CognitoUserPool userPool = CognitoUserPool(
   '13iljhocj3ajvlgalt2rq0mlbp',
   clientSecret: 'redacted',
 );
-
-User user;
-

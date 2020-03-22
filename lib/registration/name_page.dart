@@ -1,19 +1,18 @@
 import 'package:covid_hub/cognito/user_model.dart';
-import 'package:covid_hub/home/main_menu.dart';
+import 'package:covid_hub/registration/location_chooser.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class AgeChooser extends StatefulWidget {
+class NamePage extends StatefulWidget {
   final User user;
 
-  AgeChooser(this.user, {Key key}) : super(key: key);
+  NamePage(this.user, {Key key}) : super(key: key);
 
   @override
-  _AgeChooserState createState() => _AgeChooserState();
+  _NamePageState createState() => _NamePageState();
 }
 
-class _AgeChooserState extends State<AgeChooser> {
+class _NamePageState extends State<NamePage> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   @override
@@ -28,7 +27,7 @@ class _AgeChooserState extends State<AgeChooser> {
           child: Column(
             children: <Widget>[
               Text(
-                'Wähle dein Alter',
+                'Dein Name',
                 style: TextStyle(fontSize: 32),
               ),
               FormBuilder(
@@ -37,20 +36,12 @@ class _AgeChooserState extends State<AgeChooser> {
                 child: Column(
                   children: <Widget>[
                     FormBuilderTextField(
-                      attribute: 'year',
+                      attribute: 'name',
                       maxLines: 1,
-                      decoration: const InputDecoration(labelText: 'Jahrgang'),
-                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(labelText: 'Name'),
                       validators: [
                         FormBuilderValidators.required(),
-                        FormBuilderValidators.minLength(4,
-                            errorText: 'Bitte im Format "JJJJ" angeben'),
-                        FormBuilderValidators.maxLength(4,
-                            errorText: 'Bitte im Format "JJJJ" angeben'),
-                        FormBuilderValidators.numeric(
-                            errorText: 'Bitte im Format "JJJJ" angeben'),
-                        FormBuilderValidators.min(1900,
-                            errorText: 'Sie sind ein medizinisches Wunder'),
+                        FormBuilderValidators.maxLength(50),
                       ],
                     ),
                   ],
@@ -66,12 +57,11 @@ class _AgeChooserState extends State<AgeChooser> {
                       if (_fbKey.currentState.saveAndValidate()) {
                         print(_fbKey.currentState.value);
                         User user = widget.user.copyWith(
-                          birthYear:
-                              int.parse(_fbKey.currentState.value['year']),
+                          name: _fbKey.currentState.value['name'],
                         );
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => MainMenu(user),
+                            builder: (context) => LocationChooser(user),
                           ),
                         );
                       }

@@ -2,7 +2,6 @@ import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:flutter/foundation.dart';
 
-
 part 'user_model.g.dart';
 
 part 'user_enums.dart';
@@ -13,11 +12,12 @@ class User {
   final String email;
   final String passwd;
   final String location;
-  final Set<Conditions> conditions;
+  final List conditions;
   final int birthYear;
   final CovidStatus status;
   final String name;
-  final AgeGroup ageGroup;
+
+  //final AgeGroup ageGroup;
 
   final int numContacts;
   final int totalInfectedContacts;
@@ -38,17 +38,32 @@ class User {
     this.infectedContacts,
     this.numCloseContacts,
     this.infectedCloseContacts,
-  }) : ageGroup = _parseAge(birthYear);
+  }); //: ageGroup = _parseAge(birthYear);
+
+  List<String> get conditionStrings => conditions.map<String>((e) {
+        switch (e) {
+          case Conditions.HEART_DISEASE:
+            return 'Herz-Kreislauf';
+          case Conditions.RESPIRATORY_DISEASE:
+            return 'Atemwege';
+          case Conditions.AUTOIMMUNE_DISEASE:
+            return 'Autoimmun';
+          case Conditions.DIABETES:
+            return 'Diabetes';
+          default:
+            return '';
+        }
+      }).toList();
 
   List<AttributeArg> get userAttributes => <AttributeArg>[
         //AttributeArg(name: 'name',value: name),
         AttributeArg(name: 'location', value: location),
         AttributeArg(name: 'age', value: birthYear.toString()),
         AttributeArg(name: 'MedicalConditions', value: conditions.toString()),
-        AttributeArg(name: 'AgeGroup', value: ageGroup.index.toString())
+        //AttributeArg(name: 'AgeGroup', value: ageGroup.index.toString())
       ];
 
-  static AgeGroup _parseAge(int year) {
+/*static AgeGroup _parseAge(int year) {
     int age = DateTime.now().year - DateTime(year).year;
     if (age <= 12) {
       return AgeGroup.CHILD;
@@ -65,5 +80,5 @@ class User {
     } else {
       return AgeGroup.SENIOR;
     }
-  }
+  }*/
 }

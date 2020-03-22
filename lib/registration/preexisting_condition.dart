@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class PreexistingCondition extends StatefulWidget {
-  PreexistingCondition({Key key}) : super(key: key);
+  final User user;
+
+  PreexistingCondition(this.user, {Key key}) : super(key: key);
 
   @override
   _PreexistingConditionState createState() => _PreexistingConditionState();
@@ -64,19 +66,19 @@ class _PreexistingConditionState extends State<PreexistingCondition> {
                       options: [
                         FormBuilderFieldOption(
                           child: Text('Herz-Kreislauf'),
-                          value: Conditions.HEART_DISEASE.index,
+                          value: Conditions.HEART_DISEASE,
                         ),
                         FormBuilderFieldOption(
                           child: Text('Atemwege'),
-                          value: Conditions.RESPIRATORY_DISEASE.index,
+                          value: Conditions.RESPIRATORY_DISEASE,
                         ),
                         FormBuilderFieldOption(
                           child: Text('Autoimmun'),
-                          value: Conditions.AUTOIMMUNE_DISEASE.index,
+                          value: Conditions.AUTOIMMUNE_DISEASE,
                         ),
                         FormBuilderFieldOption(
                           child: Text('Diabetes'),
-                          value: Conditions.DIABETES.index,
+                          value: Conditions.DIABETES,
                         ),
                       ],
                     ),
@@ -92,12 +94,12 @@ class _PreexistingConditionState extends State<PreexistingCondition> {
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
                         print(_fbKey.currentState.value);
-                        user = user.copyWith(
+                        User user = widget.user.copyWith(
                             conditions:
                                 _fbKey.currentState.value['conditions']);
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => AgeChooser(),
+                            builder: (context) => AgeChooser(user),
                           ),
                         );
                       }

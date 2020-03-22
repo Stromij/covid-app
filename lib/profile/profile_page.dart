@@ -1,20 +1,32 @@
+import 'package:covid_hub/cognito/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class ProfilePage extends StatefulWidget {
+  final User user;
+
+  ProfilePage(this.user);
+
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState(user);
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _textEditingController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
 
-  String _userName = 'Max Muster';
-  String _userMail = 'muster@covidhub.info';
-  String _userLocation = 'Gießen';
-  String _userBirth = '1990';
-  List<String> _userConditions = ['Bluthochdruck', 'Diabetes'];
+  _ProfilePageState(User user)
+      : _userName = user.name,
+        _userMail = user.email,
+        _userLocation = user.location,
+        _userBirth = user.birthYear.toString(),
+        _userConditions = user.conditionStrings;
+
+  String _userName;
+  String _userMail;
+  String _userLocation;
+  String _userBirth;
+  List<String> _userConditions;
 
   double _titleSize = 16.0;
   double _valueSize = 18.0;
@@ -112,7 +124,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 4.0, right: 4.0,),
+                padding: const EdgeInsets.only(
+                  left: 4.0,
+                  right: 4.0,
+                ),
                 child: ListTile(
                   title: Text(
                     'Vorerkrankungen',
@@ -123,7 +138,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   trailing: IconButton(
                       icon: Icon(Icons.add_circle),
-                      onPressed: () => _showEditDialog(context, 'Vorerkrankungen')),
+                      onPressed: () =>
+                          _showEditDialog(context, 'Vorerkrankungen')),
                 ),
               ),
               //TODO: update SDK constraints (speak with team first)
@@ -160,7 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
             autovalidate: true,
             child: type == 'Jahrgang'
                 ? _buildAgeTextField()
-                : _buildStandardTextField(),
+                : _buildStandardTextField(type),
           ),
           actions: <Widget>[
             FlatButton(
@@ -219,8 +235,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
 
-  FormBuilderTextField _buildStandardTextField() => FormBuilderTextField(
+  FormBuilderTextField _buildStandardTextField(String attribute) =>
+      FormBuilderTextField(
         controller: _textEditingController,
+        attribute: attribute,
         validators: [
           FormBuilderValidators.minLength(
             1,
@@ -234,6 +252,7 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
   FormBuilderTextField _buildAgeTextField() => FormBuilderTextField(
+        attribute: 'year',
         controller: _textEditingController,
         keyboardType: TextInputType.number,
         validators: [
