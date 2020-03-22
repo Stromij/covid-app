@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class LocationChooser extends StatefulWidget {
-  final User user;
 
-  LocationChooser(this.user, {Key key}) : super(key: key);
+
+  LocationChooser({Key key}) : super(key: key);
 
   @override
   _LocationChooserState createState() => _LocationChooserState();
@@ -56,11 +56,11 @@ class _LocationChooserState extends State<LocationChooser> {
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
                         print(_fbKey.currentState.value);
-                        User user = widget.user.copyWith(
+                        user = user.copyWith(
                             location: _fbKey.currentState.value['location']);
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => PreexistingCondition(user),
+                            builder: (context) => PreexistingCondition(),
                           ),
                         );
                       }
