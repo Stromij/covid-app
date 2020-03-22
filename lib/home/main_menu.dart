@@ -1,4 +1,4 @@
-import 'package:covid_hub/profile_page.dart';
+import 'package:covid_hub/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class MainMenu extends StatefulWidget {
