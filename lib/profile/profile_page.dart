@@ -8,7 +8,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _textEditingController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
 
   String _userName = 'Max Muster';
   String _userMail = 'muster@covidhub.info';
@@ -121,6 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('$type bearbeiten'),
           content: FormBuilder(
             key: _formKey,
+            autovalidate: true,
             child: type == 'Jahrgang'
                 ? _buildAgeTextField()
                 : _buildStandardTextField(),
@@ -132,34 +133,36 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(color: Colors.green),
               ),
               onPressed: () {
-                switch (type) {
-                  case 'Name':
-                    setState(() {
-                      _userName = _textEditingController.text;
-                    });
-                    Navigator.of(context).pop();
-                    break;
-                  case 'E-Mail':
-                    setState(() {
-                      _userMail = _textEditingController.text;
-                    });
-                    Navigator.of(context).pop();
-                    break;
-                  case 'Wohnort':
-                    setState(() {
-                      _userLocation = _textEditingController.text;
-                    });
-                    Navigator.of(context).pop();
-                    break;
-                  case 'Jahrgang':
-                    setState(() {
-                      _userBirth = _textEditingController.text;
-                    });
-                    Navigator.of(context).pop();
-                    break;
-                  default:
-                    Navigator.of(context).pop();
-                    break;
+                if(_formKey.currentState.validate()) {
+                  switch (type) {
+                    case 'Name':
+                      setState(() {
+                        _userName = _textEditingController.text;
+                      });
+                      Navigator.of(context).pop();
+                      break;
+                    case 'E-Mail':
+                      setState(() {
+                        _userMail = _textEditingController.text;
+                      });
+                      Navigator.of(context).pop();
+                      break;
+                    case 'Wohnort':
+                      setState(() {
+                        _userLocation = _textEditingController.text;
+                      });
+                      Navigator.of(context).pop();
+                      break;
+                    case 'Jahrgang':
+                      setState(() {
+                        _userBirth = _textEditingController.text;
+                      });
+                      Navigator.of(context).pop();
+                      break;
+                    default:
+                      Navigator.of(context).pop();
+                      break;
+                  }
                 }
               },
             ),
@@ -199,6 +202,8 @@ class _ProfilePageState extends State<ProfilePage> {
           FormBuilderValidators.numeric(
               errorText: 'Bitte im Format "JJJJ" angeben'),
           FormBuilderValidators.min(1900,
+              errorText: 'Sie sind ein medizinisches Wunder'),
+          FormBuilderValidators.max(DateTime.now().year,
               errorText: 'Sie sind ein medizinisches Wunder'),
         ],
       );
